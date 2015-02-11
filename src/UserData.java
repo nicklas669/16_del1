@@ -21,6 +21,10 @@ public class UserData implements IUserData {
 			this.cpr = cpr;
 			this.pw = pass.generatePw();
 		}
+		
+		public int getID() {
+			return this.id;
+		}
 	}
 	
 	public class Sysadmin {
@@ -55,24 +59,6 @@ public class UserData implements IUserData {
 	}
 
 	@Override
-	public String getNavn() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getCPR() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getPw() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public int setID(String id) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -95,4 +81,28 @@ public class UserData implements IUserData {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String getNavn(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getCPR(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getPw(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Operatoer> getOperatoerArray() {
+		return operatoerer;
+	}
+
 }
