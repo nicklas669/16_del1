@@ -1,4 +1,4 @@
 
-public class OperatorFunktion {
+public class OperatorFunktion implements IUser {
 
 }
