@@ -13,8 +13,6 @@ public class LoginFunktion {
 	public int login() {
 		boolean run = true;
 		Scanner scan = new Scanner(System.in);
-		System.out.println("Velkommen til lort! Du skal logge ind for at komme videre.");
-		
 		while (run) {
 			System.out.println("Indtast ID: "); // evt. tjekke om ID er gyldigt
 			id = scan.nextInt();
@@ -26,4 +24,9 @@ public class LoginFunktion {
 		}
 		return id;
 	}
+	
+	public int login(int id) {
+		return id;
+	}
+	
 }

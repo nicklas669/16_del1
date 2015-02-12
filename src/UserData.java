@@ -88,6 +88,10 @@ public class UserData implements IUserData {
 		// TODO Auto-generated method stub
 		return operatoerer;
 	}
+	
+	public void addOperator(int id, String name, String cpr) {
+		this.operatoerer.add(new Operatoer(id, name, cpr));
+	}
 
 	@Override
 	public int setID(String id) {
