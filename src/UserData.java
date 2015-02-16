@@ -42,6 +42,10 @@ public class UserData implements IUserData {
 		public String getPw() {
 			return this.pw;
 		}
+
+		public void setPw(String newPw1) {
+			this.pw = newPw1;
+		}
 	}
 	
 	
@@ -54,9 +58,7 @@ public class UserData implements IUserData {
 			return "2";
 		}
 		
-		public void setPw(String pw) {
-			
-		}
+
 	}
 
 	@Override

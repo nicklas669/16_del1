@@ -5,12 +5,14 @@ import javafx.scene.chart.PieChart.Data;
 public class Main {
 	static Scanner scan;
 	static UserData data;
+	static PasswordFunktion pf;
 	
 	public static void main(String[] args) {
-		int activeUser, choice;
+		int activeUser;
 		boolean adminMode = false;
 		data = new UserData();
 		LoginFunktion lf = new LoginFunktion(data);
+		pf = new PasswordFunktion();
 		activeUser = lf.login(10);
 		scan = new Scanner(System.in);
 
@@ -38,10 +40,10 @@ public class Main {
 		switch(scan.nextInt()) {
 		case 1:
 			if (adminMode) Menu_oprAdmin(adminMode, ID);
-			else Menu_changePw(ID);
+			else Menu_changePw(adminMode, ID);
 			break;
 		case 2:
-			if (adminMode) Menu_changePw(ID);
+			if (adminMode) Menu_changePw(adminMode, ID);
 			else Menu_weight();
 			break;
 		case 3:
@@ -67,7 +69,7 @@ public class Main {
 				if (adminMode) Menu_visOpr(adminMode, ID);
 				break;
 			case 2:
-				if (adminMode) Menu_opretOpr();
+				if (adminMode) Menu_opretOpr(adminMode, ID);
 				break;
 			case 3:
 				if (adminMode) Menu_sletOpr();
@@ -85,12 +87,33 @@ public class Main {
 		
 	}
 
-	private static void Menu_opretOpr() {
+	private static void Menu_opretOpr(boolean adminMode, int ID) {
 		System.out.println("Opret operatør");
 		System.out.println("Indtast ID på ny operatør:");
-		// TJEK HER OM INDTASTET ID ER GYLDIGT (IKKE BRUGT I FORVEJEN)
+		boolean idExists = false;
+		int newID;
+		while (true) {
+			idExists = false;
+			newID = scan.nextInt();
+			for (UserData.Operatoer opr:data.getOperatoerArray()) {
+				if (opr.getID() == newID) {
+					idExists = true;
+				}
+			}
+			if (!idExists) {
+				break;
+			} else {
+				System.out.println("ID findes allerede, prøv igen:");
+			}
+		}
+		scan.nextLine();
 		System.out.println("Indtast navn på ny operatør:");
+		String name = scan.nextLine();
 		System.out.println("Indtast CPR på ny operatør:");
+		String cpr = scan.nextLine();
+		data.addOperator(newID, name, cpr);
+		System.out.println("Operatør oprettet!");
+		Menu_oprAdmin(adminMode, ID);
 	}
 
 	private static void Menu_visOpr(boolean adminMode, int ID) {
@@ -103,12 +126,35 @@ public class Main {
 		}
 	}
 
-	private static void Menu_changePw(int ID) {
+	private static void Menu_changePw(boolean adminMode, int ID) {
+		UserData.Operatoer opr2 = null;
+		scan.nextLine();
 		System.out.println("Indtast dit nuværende password:");
-		System.out.println("Indtast dit nye password:");
-		// TJEK HER OM INDTASTET PASSWORD ER GYLDIGT
+		String currentPw = scan.nextLine();
+		for (UserData.Operatoer opr:data.getOperatoerArray()) {
+			if (opr.getID() == ID) {
+				opr2 = opr;
+				while (!opr.getPw().equals(currentPw)) {
+					System.out.println("Forkert password, prøv venligst igen:");
+					currentPw = scan.nextLine();
+				}
+			}
+		}
+		System.out.println("Indtast dit nye password (skal overholde DTU's regler for password):");
+		String newPw1 = scan.nextLine();
+		while (!pf.validatePw(newPw1)) {
+			System.out.println("Det indtastede overholder ikke DTU's regler for password! Prøv igen:");
+			newPw1 = scan.nextLine();
+		}
 		System.out.println("Indtast dit nye password igen:");
-		// TJEK HER OM INDTASTET PASSWORD ER DET SAMME SOM FORRIGE INDTASTNING
+		String newPw2 = scan.nextLine();
+		while (!newPw2.equals(newPw1)) {
+			System.out.println("Det to password stemmer ikke overens! Prøv igen:");
+			newPw2 = scan.nextLine();
+		}
+		opr2.setPw(newPw1);
+		System.out.println("Dit password er skiftet!");
+		Menu_main(adminMode, ID);
 	}
 	
 	private static void Menu_weight() {
