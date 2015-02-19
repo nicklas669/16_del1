@@ -1,11 +1,10 @@
+package functionality;
 
-public class PasswordFunktion {
+public class PasswordFunktion implements IPasswordFunktion {
 	public PasswordFunktion() {
 	}
 
 	public boolean validatePw(String input) {
-		
-		//INDSÆT KODE FOR TJEK OM ET NYT PASSWORD ER GYLDIGT HER
 		char[] pw = input.toCharArray();
 		int upper = 0, lower = 0, numbers = 0, symbols = 0, categories = 0;
 		boolean valid = true;
@@ -24,8 +23,10 @@ public class PasswordFunktion {
 			if (numbers > 0) categories++;
 			if (symbols > 0) categories++;
 		}	
-		if (categories >= 3 && valid) {
-			return true;
-		} else { return false; }
+		if (categories >= 3 && valid) { // MINDST 3 AF KATEGORIERNE SKAL VÆRE REPRÆSENTERET
+			return true; // PASSWORD ER GYLDIGT
+		} else { return false; } // PASSWORD ER UGYLDIGT
 	}
+	
+	
 }

@@ -1,3 +1,4 @@
+package data;
 import java.util.ArrayList;
 
 
@@ -41,6 +42,10 @@ public class UserData implements IUserData {
 		
 		public String getPw() {
 			return this.pw;
+		}
+		
+		public String getName() {
+			return this.name;
 		}
 
 		public void setPw(String newPw1) {
@@ -91,8 +96,8 @@ public class UserData implements IUserData {
 		return operatoerer;
 	}
 	
-	public void addOperator(int id, String name, String cpr) {
-		this.operatoerer.add(new Operatoer(id, name, cpr));
+	public void addOperator(int id, String name, String cpr, String pw) {
+		this.operatoerer.add(new Operatoer(id, name, cpr, pw));
 	}
 
 	@Override

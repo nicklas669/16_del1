@@ -1,12 +1,16 @@
+package functionality;
 import java.util.Scanner;
 
+import data.IUserData;
+import data.UserData;
 
-public class LoginFunktion {
+
+public class LoginFunktion implements ILoginFunktion {
 	int id;
 	String pw;
-	UserData data;
+	IUserData data;
 	
-	public LoginFunktion(UserData data) {
+	public LoginFunktion(IUserData data) {
 		this.data = data;
 	}
 
@@ -15,7 +19,7 @@ public class LoginFunktion {
 		Scanner scan = new Scanner(System.in);
 		while (run) {
 			System.out.println("Indtast ID: "); // evt. tjekke om ID er gyldigt
-			id = scan.nextInt();
+			id = scan.nextInt(); // input handling
 			System.out.println("Indtast password: ");
 			pw = scan.next();
 			for (UserData.Operatoer opr:data.getOperatoerArray()) {
@@ -25,7 +29,7 @@ public class LoginFunktion {
 		return id;
 	}
 	
-	public int login(int id) {
+	public int login(int id) { // used for testing purposes
 		return id;
 	}
 	

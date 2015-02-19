@@ -1,3 +1,4 @@
+package data;
 import java.util.ArrayList;
 
 
@@ -11,4 +12,5 @@ public interface IUserData {
 	public String setNavn(String navn);
 	public String setCPR(String cpr);
 	public String setPw(String pw);
+	void addOperator(int id, String name, String cpr, String pw);
 }
