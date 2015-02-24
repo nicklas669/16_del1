@@ -1,6 +1,7 @@
 package boundary;
 import java.util.Scanner;
 
+import data.IUserData.DALException;
 import data.UserData.Operatoer;
 import functionality.ILoginFunktion;
 import functionality.IPasswordFunktion;
@@ -14,13 +15,22 @@ public class Menu {
 	IUserFunktion userf;
 	int ID;
 	boolean adminMode = false;
+	boolean looping = false;
 	
 	public Menu(ILoginFunktion login, IPasswordFunktion pass, IUserFunktion user) {
 		this.scan = new Scanner(System.in);
 		this.lf = login;
 		this.passf = pass;
 		this.userf = user;
-		ID = lf.login(10);
+		
+		try {
+			ID = lf.login(10);
+		} catch (DALException e) {
+			System.out.println("Fejl der ikke burde ske er sket");
+		}
+		
+		
+
 		Menu_main(adminMode, ID);
 	}
 	
@@ -92,21 +102,26 @@ public class Menu {
 	public void Menu_sletOpr(boolean adminMode, int ID) {
 		System.out.println("Slet operatør");
 		System.out.print("Indtast ID på operatør der skal slettes:");
-		int checkID = scan.nextInt();
-		while (!userf.checkExists(checkID)) {
-			System.out.print("ID findes ikke, prøv igen:");
-			checkID = scan.nextInt();
-		}
-		System.out.println("Er du sikker på at du vil slette operatør "+userf.getOperatorByID(checkID).getName()+" med ID: "+checkID+"?");
-		System.out.println("(indtast \"JA\" eller \"NEJ\")");
-		scan.nextLine();
-		String input = scan.nextLine();
-		if (input.toUpperCase().equals("JA")) {
-			userf.removeOperator(checkID);
-			System.out.println("Operator med ID " + checkID+ " er slettet");
-			
-		} 
-		Menu_oprAdmin(adminMode, ID);
+		int checkID = 0;
+		looping = true;
+		do {
+			try {
+				checkID = scan.nextInt();
+				userf.checkExists(checkID);
+				looping = false;
+				System.out.println("Er du sikker på at du vil slette operatør "+userf.getOperatorByID(checkID).getName()+" med ID: "+checkID+"?");
+				System.out.println("(indtast \"JA\" eller \"NEJ\")");
+				scan.nextLine();
+				String input = scan.nextLine();
+				if (input.toUpperCase().equals("JA")) {
+					userf.removeOperator(checkID);
+					System.out.println("Operator med ID " + checkID+ " er slettet");
+				} 
+				Menu_oprAdmin(adminMode, ID);
+			} catch (DALException e) {
+				System.out.print("ID findes ikke, prøv igen:");
+			}
+		} while(looping);
 	}
 
 	public void Menu_opretOpr(boolean adminMode, int ID) {
@@ -118,7 +133,7 @@ public class Menu {
 			idExists = false;
 			newID = scan.nextInt(); // evt. lave input-validation her
 			idExists = userf.checkExists(newID);
-			if (idExists == false or ) {
+			if (idExists == false) {
 				break;
 			} else {
 				System.out.print("ID findes allerede, prøv igen:");

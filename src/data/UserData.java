@@ -96,7 +96,7 @@ public class UserData implements IUserData {
 		return operatoerer;
 	}
 	
-	public void addOperator(int id, String name, String cpr, String pw) {
+	public void addOperator(int id, String name, String cpr, String pw) throws DALException {
 		this.operatoerer.add(new Operatoer(id, name, cpr, pw));
 	}
 
