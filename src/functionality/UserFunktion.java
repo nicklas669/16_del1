@@ -13,7 +13,7 @@ public class UserFunktion implements IUserFunktion {
 
 	@Override
 	public void removeOperator(int ID) {
-		data.getOperatoerArray().remove(getOperatorByID(ID).getID());
+		data.getOperatoerArray().remove(getOperatorByID(ID));
 	}
 
 	@Override

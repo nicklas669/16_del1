@@ -90,7 +90,7 @@ public class Menu {
 	}
 
 	public void Menu_sletOpr(boolean adminMode, int ID) {
-		System.out.println("Opret operatør");
+		System.out.println("Slet operatør");
 		System.out.print("Indtast ID på operatør der skal slettes:");
 		int checkID = scan.nextInt();
 		while (!userf.checkExists(checkID)) {
@@ -99,9 +99,14 @@ public class Menu {
 		}
 		System.out.println("Er du sikker på at du vil slette operatør "+userf.getOperatorByID(checkID).getName()+" med ID: "+checkID+"?");
 		System.out.println("(indtast \"JA\" eller \"NEJ\")");
+		scan.nextLine();
 		String input = scan.nextLine();
-		if (input.toUpperCase().equals("JA")) ;
-		else Menu_oprAdmin(adminMode, ID);
+		if (input.toUpperCase().equals("JA")) {
+			userf.removeOperator(checkID);
+			System.out.println("Operator med ID " + checkID+ " er slettet");
+			
+		} 
+		Menu_oprAdmin(adminMode, ID);
 	}
 
 	public void Menu_opretOpr(boolean adminMode, int ID) {
@@ -113,7 +118,7 @@ public class Menu {
 			idExists = false;
 			newID = scan.nextInt(); // evt. lave input-validation her
 			idExists = userf.checkExists(newID);
-			if (idExists == false) {
+			if (idExists == false or ) {
 				break;
 			} else {
 				System.out.print("ID findes allerede, prøv igen:");
