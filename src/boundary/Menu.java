@@ -118,10 +118,10 @@ public class Menu {
 			idExists = false;
 			newID = scan.nextInt(); // evt. lave input-validation her
 			idExists = userf.checkExists(newID);
-			if (idExists == false or ) {
+			if (idExists == false && newID>10  && newID<=99) {
 				break;
 			} else {
-				System.out.print("ID findes allerede, prøv igen:");
+				System.out.print("Ugyldig ID, prøv igen:");
 			}
 		}
 		scan.nextLine();
@@ -155,10 +155,11 @@ public class Menu {
 	}
 
 	public void Menu_changePw(boolean adminMode, int ID) {
+		System.out.print("Indtast dit nuværende password:");
 		scan.nextLine();
 		String currentPw = scan.nextLine();
 		while (!userf.changePassword(ID, currentPw)) {
-			System.out.print("Indtast dit nuværende password:");
+			System.out.println("Ikke korrekt password prøv igen");
 			currentPw = scan.nextLine();
 		}
 		System.out.print("Indtast dit nye password (skal overholde DTU's regler for password):");
