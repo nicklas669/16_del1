@@ -133,7 +133,7 @@ public class Menu {
 			idExists = false;
 			newID = scan.nextInt(); // evt. lave input-validation her
 			idExists = userf.checkExists(newID);
-			if (idExists == false) {
+			if (idExists == false && newID>10  && newID<=99) {
 				break;
 			} else {
 				System.out.print("ID findes allerede, prøv igen:");
