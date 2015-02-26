@@ -62,32 +62,46 @@ public class UserData implements IUserData {
 		public String generatePw() {
 			return "2";
 		}
-		
-
 	}
 
 	@Override
-	public int getID() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getID(String cpr) throws DALException {
+		for (Operatoer opr : operatoerer) {
+			if (opr.cpr ==cpr){
+				return opr.id;
+			}
+		}
+		throw new DALException();
 	}
 
 	@Override
-	public String getNavn(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getNavn(int id) throws DALException {
+		for (Operatoer opr : operatoerer) {
+			if (opr.id == id){
+				return opr.name;
+			}
+		}
+		throw new DALException();
 	}
 
 	@Override
-	public String getCPR(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getCPR(int id) throws DALException {
+		for (Operatoer opr : operatoerer) {
+			if (opr.id == id){
+				return opr.cpr;
+			}
+		}
+		throw new DALException();
 	}
 
 	@Override
-	public String getPw(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getPw(int id) throws DALException {
+		for (Operatoer opr : operatoerer) {
+			if (opr.id == id){
+				return opr.pw;
+			}
+		}
+		throw new DALException();
 	}
 
 	@Override
@@ -96,32 +110,60 @@ public class UserData implements IUserData {
 		return operatoerer;
 	}
 	
-	public void addOperator(int id, String name, String cpr, String pw) throws DALException {
+	public void createOperatoer(int id, String name, String cpr, String pw) throws DALException{
+		for (Operatoer opr : operatoerer) {
+			if(opr.id == id) throw new DALException();
+			if(opr.cpr == cpr) throw new DALException();
+		}
+		if (name.length()>20) throw new DALException();
 		this.operatoerer.add(new Operatoer(id, name, cpr, pw));
 	}
 
+//	@Override
+//	public void setID(int currID, int newID) throws DALException {
+//		for (Operatoer opr:operatoerer) {
+//			if (opr.getID() == currID) {
+//				opr.id = newID;
+//				return;
+//			}
+//		}
+//		throw new DALException();
+//	}
+
+//	@Override
+//	public String setNavn(String navn) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public String setCPR(String cpr) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+
 	@Override
-	public int setID(String id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void setPw(int id, String pw) throws DALException {
+		for (Operatoer opr : operatoerer) {
+			if(opr.id == id) {
+				opr.pw = pw;
+			}
+		}
+		throw new DALException();
+
 	}
 
 	@Override
-	public String setNavn(String navn) {
+	public Operatoer getOperatoer(int id) throws DALException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public String setCPR(String cpr) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
-	public String setPw(String pw) {
+	public void updateOperatoer(Operatoer opr) throws DALException {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
 }

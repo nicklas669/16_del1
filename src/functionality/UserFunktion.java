@@ -19,23 +19,24 @@ public class UserFunktion implements IUserFunktion {
 
 	@Override
 	public boolean checkExists(int ID) throws DALException {
+		if (!(ID>10 && ID<=99)) throw new DALException(); 
 		for (UserData.Operatoer opr : data.getOperatoerArray()) {
 			if (opr.getID() == ID) {
-				return true;
+				throw new DALException();
 			}
 		}
-		throw new DALException();
+		return true;
 	}
 
 
 	@Override
-	public void addOperator(int newID, String name, String cpr, String pw) throws DALException {
-		data.addOperator(newID, name, cpr, pw);
+	public void addOperator(int newID, String name, String cpr, String pw) throws DALException{
+		data.createOperatoer(newID, name, cpr, pw);
 	}
 
 
 	@Override
-	public void showOperators() throws DALException {
+	public void showOperators() {
 		for (Operatoer opr : data.getOperatoerArray())  {
 			System.out.println(opr);
 		}
@@ -54,11 +55,10 @@ public class UserFunktion implements IUserFunktion {
 			if (opr.getID() == ID) {
 				if (opr.getPw().equals(pw)) return true;
 				else {
-					System.out.println("Forkert password!");
-					return false;
+					throw new DALException();
 				}
 			}
 		}
-		return false;
+		throw new DALException();
 	}
 }

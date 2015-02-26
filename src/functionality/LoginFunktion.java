@@ -2,6 +2,7 @@ package functionality;
 import java.util.Scanner;
 
 import data.IUserData;
+import data.IUserData.DALException;
 import data.UserData;
 
 
@@ -14,7 +15,7 @@ public class LoginFunktion implements ILoginFunktion {
 		this.data = data;
 	}
 
-	public int login() {
+	public int login() throws DALException {
 		boolean run = true;
 		Scanner scan = new Scanner(System.in);
 		while (run) {

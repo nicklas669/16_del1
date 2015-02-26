@@ -127,19 +127,7 @@ public class Menu {
 	public void Menu_opretOpr(boolean adminMode, int ID) {
 		System.out.println("Opret operatør");
 		System.out.print("Indtast ID på ny operatør:");
-		boolean idExists = false;
-		int newID;
-		while (true) {
-			idExists = false;
-			newID = scan.nextInt(); // evt. lave input-validation her
-			idExists = userf.checkExists(newID);
-			if (idExists == false && newID>10  && newID<=99) {
-				break;
-			} else {
-				System.out.print("ID findes allerede, prøv igen:");
-			}
-		}
-		scan.nextLine();
+		int newID = scan.nextInt();
 		System.out.print("Indtast navn på ny operatør:");
 		String name = scan.nextLine();
 		System.out.print("Indtast CPR på ny operatør:");
@@ -155,7 +143,12 @@ public class Menu {
 				System.out.print("Det indtastede overholder ikke DTU's regler for password! Prøv igen:");
 			}
 		}
-		userf.addOperator(newID, name, cpr, pw);
+		try {
+			userf.addOperator(newID, name, cpr, pw);
+		} catch (DALException e) {
+			System.out.println("ID eller CPR eksisterede allerede, prøv igen:");
+			Menu_opretOpr(adminMode, newID);
+		}
 		System.out.println("Operatør oprettet!");
 		Menu_oprAdmin(adminMode, ID);
 	}
@@ -170,11 +163,20 @@ public class Menu {
 	}
 
 	public void Menu_changePw(boolean adminMode, int ID) {
+		System.out.print("Indtast dit nuværende password:");
 		scan.nextLine();
 		String currentPw = scan.nextLine();
-		while (!userf.changePassword(ID, currentPw)) {
-			System.out.print("Indtast dit nuværende password:");
-			currentPw = scan.nextLine();
+		while(true) {
+			try 
+			{
+				userf.changePassword(ID, currentPw); 
+				currentPw = scan.nextLine();
+				break;
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+				System.out.print("Forkert password, prøv igen:");
+			}
 		}
 		System.out.print("Indtast dit nye password (skal overholde DTU's regler for password):");
 		String newPw = scan.nextLine();
@@ -188,7 +190,7 @@ public class Menu {
 			System.out.print("Det to password stemmer ikke overens! Prøv igen:");
 			newPw2 = scan.nextLine();
 		}
-		userf.getOperatorByID(ID).setPw(newPw);
+
 		System.out.println("Dit password er skiftet!");
 		Menu_main(adminMode, ID);
 	}
@@ -196,4 +198,5 @@ public class Menu {
 	public void Menu_weight() {
 
 	}
+	
 }
