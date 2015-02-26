@@ -10,18 +10,15 @@ public interface IUserData {
 	public String getPw(int id) throws DALException;
 	public ArrayList<UserData.Operatoer> getOperatoerArray();
 	public void setPw(int id, String pw) throws DALException;
+	void removeOperatoer(int id) throws DALException;
 	void createOperatoer(int id, String name, String cpr, String pw) throws DALException;
 	void updateOperatoer(UserData.Operatoer opr) throws DALException;
-	
-	
 //	public void setID(int currID, int newID) throws DALException;
 //	public String setNavn(String navn) throws DALException;
 //	public String setCPR(String cpr) throws DALException;
 	
 	public class DALException extends Exception {
-		
 		public DALException() {
-			
 		}
 	}
 }

@@ -23,24 +23,24 @@ public class Menu {
 		this.passf = pass;
 		this.userf = user;
 		
-		try {
-			ID = lf.login(10);
-		} catch (DALException e) {
-			System.out.println("Fejl der ikke burde ske er sket");
+		while (true) {
+			try {
+				ID = lf.login(10);
+				break;
+			} catch (DALException e) {
+				System.out.println("ID findes ikke eller password er forkert, prøv igen.");
+			}
 		}
-		
-		
-
-		Menu_main(adminMode, ID);
-	}
-	
-	public void Menu_main(boolean adminMode, int ID) {
 		if (ID == 10) {
 			System.out.println("Du er logget ind som system administrator.");
 			adminMode = true;
 		} else { 
 			System.out.println("Du er logget ind som operatør."); 
 		}
+		Menu_main(adminMode, ID);
+	}
+	
+	public void Menu_main(boolean adminMode, int ID) {
 		if (adminMode) {
 			System.out.println("1) Operatør Administration\n"
 					+ "2) Ændre password\n"
@@ -59,10 +59,10 @@ public class Menu {
 			break;
 		case 2:
 			if (adminMode) Menu_changePw(adminMode, ID);
-			else Menu_weight();
+			else Menu_weight(adminMode, ID);
 			break;
 		case 3:
-			if (adminMode) Menu_weight();
+			if (adminMode) Menu_weight(adminMode, ID);
 			else System.exit(1);
 			break;
 		case 4:
@@ -109,13 +109,13 @@ public class Menu {
 				checkID = scan.nextInt();
 				userf.checkExists(checkID);
 				looping = false;
-				System.out.println("Er du sikker på at du vil slette operatør "+userf.getOperatorByID(checkID).getName()+" med ID: "+checkID+"?");
-				System.out.println("(indtast \"JA\" eller \"NEJ\")");
+				System.out.println("Er du sikker på at du vil slette operatør "+userf.getNameById(checkID)+" med ID: "+checkID+"?");
+				System.out.println("(indtast \"JA\" hvis du er sikker");
 				scan.nextLine();
 				String input = scan.nextLine();
-				if (input.toUpperCase().equals("JA")) {
+				if (input.toUpperCase().trim().equals("JA")) {
 					userf.removeOperator(checkID);
-					System.out.println("Operator med ID " + checkID+ " er slettet");
+					System.out.println("Operator med ID " + checkID+ " er slettet.");
 				} 
 				Menu_oprAdmin(adminMode, ID);
 			} catch (DALException e) {
@@ -128,6 +128,7 @@ public class Menu {
 		System.out.println("Opret operatør");
 		System.out.print("Indtast ID på ny operatør:");
 		int newID = scan.nextInt();
+		scan.nextLine();
 		System.out.print("Indtast navn på ny operatør:");
 		String name = scan.nextLine();
 		System.out.print("Indtast CPR på ny operatør:");
@@ -146,7 +147,7 @@ public class Menu {
 		try {
 			userf.addOperator(newID, name, cpr, pw);
 		} catch (DALException e) {
-			System.out.println("ID eller CPR eksisterede allerede, prøv igen:");
+			System.out.println("ID eller CPR eksisterede allerede!");
 			Menu_opretOpr(adminMode, newID);
 		}
 		System.out.println("Operatør oprettet!");
@@ -157,7 +158,7 @@ public class Menu {
 		System.out.println("Vis operatører");
 		userf.showOperators();
 		System.out.println("1) Tilbage til Operatør Administration");
-		if (scan.nextInt() == 1) { // MANGLER LOOP HER
+		if (scan.nextInt() == 1) {
 			Menu_oprAdmin(adminMode, ID);
 		}
 	}
@@ -165,16 +166,14 @@ public class Menu {
 	public void Menu_changePw(boolean adminMode, int ID) {
 		System.out.print("Indtast dit nuværende password:");
 		scan.nextLine();
-		String currentPw = scan.nextLine();
+		String currentPw;
 		while(true) {
 			try 
 			{
-				userf.changePassword(ID, currentPw); 
 				currentPw = scan.nextLine();
-				break;
+				if (userf.checkPassword(ID, currentPw)) break; 
 			}
 			catch (Exception e) {
-				// TODO: handle exception
 				System.out.print("Forkert password, prøv igen:");
 			}
 		}
@@ -195,8 +194,15 @@ public class Menu {
 		Menu_main(adminMode, ID);
 	}
 
-	public void Menu_weight() {
-
+	public void Menu_weight(boolean adminMode, int id) {
+		System.out.println("Vægt");
+		System.out.print("Indtast tara vægt i kg: ");
+		double tara = scan.nextDouble();
+		scan.nextLine();
+		System.out.print("Indtast brutto vægt i kg: ");
+		double brutto = scan.nextDouble();
+		System.out.println("Netto vægt i kg: "+(tara+brutto)+"\n");
+		Menu_main(adminMode, id);
 	}
 	
 }

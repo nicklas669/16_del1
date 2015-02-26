@@ -19,13 +19,13 @@ public class LoginFunktion implements ILoginFunktion {
 		boolean run = true;
 		Scanner scan = new Scanner(System.in);
 		while (run) {
-			System.out.println("Indtast ID: "); // evt. tjekke om ID er gyldigt
-			id = scan.nextInt(); // input handling
+			System.out.println("Indtast ID: ");
+			id = scan.nextInt();
+			scan.nextLine();
 			System.out.println("Indtast password: ");
-			pw = scan.next();
-			for (UserData.Operatoer opr:data.getOperatoerArray()) {
-				if (id == opr.getID() && opr.getPw().equals(pw)) run=false;
-			}
+			pw = scan.nextLine().trim();
+			if (data.getOperatoer(id).getPw().equals(pw)) return id;
+			else throw new DALException();
 		}
 		return id;
 	}

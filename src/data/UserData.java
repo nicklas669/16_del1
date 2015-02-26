@@ -1,6 +1,8 @@
 package data;
 import java.util.ArrayList;
 
+import data.IUserData.DALException;
+
 
 public class UserData implements IUserData {
 	private ArrayList<Operatoer> operatoerer = new ArrayList<Operatoer>();
@@ -118,6 +120,44 @@ public class UserData implements IUserData {
 		if (name.length()>20) throw new DALException();
 		this.operatoerer.add(new Operatoer(id, name, cpr, pw));
 	}
+	
+	@Override
+	public void setPw(int id, String pw) throws DALException {
+		for (Operatoer opr : operatoerer) {
+			if(opr.id == id) {
+				opr.pw = pw;
+			}
+		}
+		throw new DALException();
+		
+	}
+	
+	@Override
+	public Operatoer getOperatoer(int id) throws DALException {
+		if (id<10 || id>99) throw new DALException(); 
+		for (Operatoer opr:operatoerer) {
+			if (opr.getID() == id) return opr;
+		}
+		throw new DALException();
+	}
+	
+	
+	@Override
+	public void updateOperatoer(Operatoer opr) throws DALException {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void removeOperatoer(int id) throws DALException {
+		if (id == 10) throw new DALException();
+		for (Operatoer opr:operatoerer) {
+			if (opr.getID() == id) {
+				operatoerer.remove(opr);
+				return;
+			}
+		}
+		throw new DALException();
+	}
 
 //	@Override
 //	public void setID(int currID, int newID) throws DALException {
@@ -142,28 +182,5 @@ public class UserData implements IUserData {
 //		return null;
 //	}
 
-	@Override
-	public void setPw(int id, String pw) throws DALException {
-		for (Operatoer opr : operatoerer) {
-			if(opr.id == id) {
-				opr.pw = pw;
-			}
-		}
-		throw new DALException();
-
-	}
-
-	@Override
-	public Operatoer getOperatoer(int id) throws DALException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public void updateOperatoer(Operatoer opr) throws DALException {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

@@ -16,9 +16,9 @@ public class Main {
 	
 	public static void main(String[] args) throws DALException {
 		IUserData data = new UserData();
-		ILoginFunktion login = new LoginFunktion(data);
-		IPasswordFunktion pass = new PasswordFunktion();
-		IUserFunktion user = new UserFunktion(data);
-		Menu menu = new Menu(login, pass, user);
+		ILoginFunktion loginf = new LoginFunktion(data);
+		IPasswordFunktion passf = new PasswordFunktion();
+		IUserFunktion userf = new UserFunktion(data);
+		Menu menu = new Menu(loginf, passf, userf);
 	}
 }

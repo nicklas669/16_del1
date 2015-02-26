@@ -14,18 +14,13 @@ public class UserFunktion implements IUserFunktion {
 
 	@Override
 	public void removeOperator(int ID) throws DALException {
-		data.getOperatoerArray().remove(getOperatorByID(ID) );
+		data.removeOperatoer(ID);
 	}
 
 	@Override
 	public boolean checkExists(int ID) throws DALException {
-		if (!(ID>10 && ID<=99)) throw new DALException(); 
-		for (UserData.Operatoer opr : data.getOperatoerArray()) {
-			if (opr.getID() == ID) {
-				throw new DALException();
-			}
-		}
-		return true;
+		if (data.getOperatoer(ID) != null) return true;
+		return false;
 	}
 
 
@@ -41,6 +36,12 @@ public class UserFunktion implements IUserFunktion {
 			System.out.println(opr);
 		}
 	}
+	
+	public String getNameById(int ID) throws DALException {
+		String output = data.getNavn(ID);
+		return output;
+	}
+	
 	public Operatoer getOperatorByID(int ID) throws DALException {
 		for (UserData.Operatoer opr:data.getOperatoerArray()) {
 			if (opr.getID() == ID) {
@@ -50,15 +51,8 @@ public class UserFunktion implements IUserFunktion {
 		return null;
 	}
 	
-	public boolean changePassword(int ID, String pw) throws DALException {
-		for (UserData.Operatoer opr:data.getOperatoerArray())  {
-			if (opr.getID() == ID) {
-				if (opr.getPw().equals(pw)) return true;
-				else {
-					throw new DALException();
-				}
-			}
-		}
-		throw new DALException();
+	public boolean checkPassword(int ID, String pw) throws DALException {
+		if (data.getPw(ID).equals(pw)) return true;
+		else throw new DALException();
 	}
 }
