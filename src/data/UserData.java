@@ -1,5 +1,6 @@
 package data;
 import java.util.ArrayList;
+import java.util.Random;
 
 import data.IUserData.DALException;
 
@@ -8,7 +9,7 @@ public class UserData implements IUserData {
 	private ArrayList<Operatoer> operatoerer = new ArrayList<Operatoer>();
 	
 	public UserData() {
-		operatoerer.add(new Operatoer(10, "Sysadmin", "111111-1111", "1")); //>02324it!<
+		operatoerer.add(new Operatoer(10, "Sysadmin", "111111-1111", ">02324it!<"));
 		operatoerer.add(new Operatoer(20, "Mogens", "123456-7890"));
 		operatoerer.add(new Operatoer(21, "Jens", "123456-7880"));
 		operatoerer.add(new Operatoer(22, "Børge", "123456-7870"));
@@ -62,7 +63,9 @@ public class UserData implements IUserData {
 		}
 		
 		public String generatePw() {
-			return "2";
+//			Random rnd = new Random();
+			String pw = "aaAA11";
+			return pw;
 		}
 	}
 

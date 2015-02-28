@@ -23,9 +23,11 @@ public class Menu {
 		this.passf = pass;
 		this.userf = user;
 		
+		System.out.println("Velkommen til vægt med operatørsystem.\n"
+				+ "Du skal logge ind for at komme videre.");
 		while (true) {
 			try {
-				ID = lf.login(10);
+				ID = lf.login();
 				break;
 			} catch (DALException e) {
 				System.out.println("ID findes ikke eller password er forkert, prøv igen.");
