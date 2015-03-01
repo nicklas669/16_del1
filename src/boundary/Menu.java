@@ -2,7 +2,6 @@ package boundary;
 import java.util.Scanner;
 
 import data.IUserData.DALException;
-import data.UserData.Operatoer;
 import functionality.ILoginFunktion;
 import functionality.IPasswordFunktion;
 import functionality.IUserFunktion;

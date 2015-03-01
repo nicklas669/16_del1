@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 import data.IUserData;
 import data.IUserData.DALException;
-import data.UserData;
 
 
 public class LoginFunktion implements ILoginFunktion {

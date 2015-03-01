@@ -1,8 +1,5 @@
 package data;
 import java.util.ArrayList;
-import java.util.Random;
-
-import data.IUserData.DALException;
 
 
 public class UserData implements IUserData {

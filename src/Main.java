@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 import boundary.Menu;
 import data.IUserData;
 import data.IUserData.DALException;
@@ -10,7 +8,6 @@ import functionality.IUserFunktion;
 import functionality.LoginFunktion;
 import functionality.PasswordFunktion;
 import functionality.UserFunktion;
-//import javafx.scene.chart.PieChart.Data;
 
 public class Main {
 	
